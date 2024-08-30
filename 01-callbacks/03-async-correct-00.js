@@ -30,8 +30,10 @@ const totalOrig = (items, callback) => {
 };
 
 const total = (items, callback) => {
-  const iterate = (i = 0, result = 0) => {
+  const iterate = () => {
     let timer;
+    let i = 0;
+    let result = 0;
 
     const done = (err, res) => {
       clearInterval(timer);
