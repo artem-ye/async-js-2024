@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 // Task: rewrite function to return result into sync callback
 
@@ -21,9 +21,9 @@ const totalCb = (items, cb) => {
 };
 
 const electronics = [
-  { name: "Laptop", price: 1500 },
-  { name: "Keyboard", price: 100 },
-  { name: "HDMI cable", price: 10 },
+  { name: 'Laptop', price: 1500 },
+  { name: 'Keyboard', price: 100 },
+  { name: 'HDMI cable', price: 10 },
 ];
 
 // Use new signature total(electronics, (money) => ...)
@@ -32,5 +32,5 @@ console.log({ money });
 
 totalCb(electronics, (err, res) => {
   if (err) return void console.error(err);
-  console.log("Callback", { res });
+  console.log('Callback', { res });
 });

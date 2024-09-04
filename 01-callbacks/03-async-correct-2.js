@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 // Task: rewrite `total` function to be async with JavaScript timers
 // Use `setInterval` and `clearInterval` to check next item each 1 second
@@ -16,12 +16,13 @@
 // { money: 1610 }
 // { money: 1610 }
 
+// eslint-disable-next-line no-unused-vars
 const totalOrig = (items, callback) => {
   let result = 0;
   for (const item of items) {
     console.log({ check: { item } });
     if (item.price < 0) {
-      callback(new Error("Negative price is not allowed"));
+      callback(new Error('Negative price is not allowed'));
       return;
     }
     result += item.price;
@@ -37,7 +38,7 @@ const total = (items, callback) => {
       const { price = 0 } = items[i] || {};
 
       if (price < 0)
-        return void callback(new Error("Negative price is not allowed"));
+        return void callback(new Error('Negative price is not allowed'));
 
       result += price;
       if (++i < items.length) iterate(i, result);
