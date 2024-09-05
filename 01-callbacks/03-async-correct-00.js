@@ -1,4 +1,3 @@
-/* eslint-disable operator-linebreak */
 'use strict';
 
 // Task: rewrite `total` function to be async with JavaScript timers
@@ -33,9 +32,9 @@ const totalOrig = (items, callback) => {
 
 const total = (items, callback) => {
   const iterate = () => {
-    let timer = null;
-    let i = 0;
     let result = 0;
+    let i = 0;
+    let timer = null;
 
     const done = (err, res) => {
       clearInterval(timer);
@@ -43,14 +42,15 @@ const total = (items, callback) => {
     };
 
     timer = setInterval(() => {
-      if (i > items.length - 1) return void done(null, result);
+      if (i < items.length) {
+        console.log({ check: { item: items[i] } });
 
-      console.log({ check: { item: items[i] } });
-
-      const { price } = items[i];
-      price < 0
-        ? done(new Error('Negative price is not allowed'))
-        : (i++, (result += price));
+        const { price } = items[i++];
+        result += price;
+        price < 0 && done(new Error('Negative price is not allowed'));
+      } else {
+        done(null, result);
+      }
     }, 1000);
   };
 
