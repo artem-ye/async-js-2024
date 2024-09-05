@@ -12,19 +12,20 @@ const MAX_PURCHASE = 2000;
 
 const calculateSubtotal = (goods, callback) => {
   let amount = 0;
+
   for (const item of goods) {
-    if (typeof item.name !== 'string') {
-      return callback(new Error('Noname in item in the bill'));
-    }
-    if (typeof item.price !== 'number') {
-      return callback(Error(`${item.name} price expected to be number`));
-    }
-    if (item.price < 0) {
-      return callback(new Error(`Negative price for ${item.name}`));
-    }
-    amount += item.price;
+    const { name, price } = item;
+
+    const e =
+      (typeof name !== 'string' && 'Noname in item in the bill') ||
+      (typeof price !== 'number' && `${name} price expected to be number`) ||
+      (price < 0 && `Negative price for ${name}`);
+
+    if (e) return void callback(new Error(e));
+    amount += price;
   }
-  return callback(null, amount);
+
+  callback(null, amount);
 };
 
 const calculateTotal = (order, callback) => {
@@ -32,24 +33,24 @@ const calculateTotal = (order, callback) => {
   let total = 0;
 
   const expense = (errors, groupName) => (err, amount) => {
+    if (err) return void errors.push(err);
     total += amount;
     expenses.set(groupName, amount);
-    err && errors.push(err);
   };
 
   const subtotalsErrors = [];
   for (const groupName in order) {
     const goods = order[groupName];
     calculateSubtotal(goods, expense(subtotalsErrors, groupName));
-    if (total > MAX_PURCHASE) {
-      return callback(new Error('Total is above the limit'));
+    if (!subtotalsErrors.length && total > MAX_PURCHASE) {
+      return void callback(new Error('Total is above the limit'));
     }
   }
 
   const err = subtotalsErrors.length
     ? new AggregateError(subtotalsErrors, 'Unable to calculate subtotals')
     : null;
-  return callback(err, { total, expenses });
+  callback(err, { total, expenses });
 };
 
 const purchase = {
@@ -71,13 +72,3 @@ calculateTotal(purchase, (err, bill) => {
   }
   console.log(bill);
 });
-
-// try {
-//   console.log(purchase);
-//   calculateTotal(purchase, (bill) => {
-//     console.log(bill);
-//   });
-// } catch (error) {
-//   console.log('Error detected');
-//   console.error(error);
-// }
