@@ -34,10 +34,7 @@ const calculateTotal = (order, callback) => {
   const expense = (errors, groupName) => (err, amount) => {
     total += amount;
     expenses.set(groupName, amount);
-
-    if (err) {
-      errors.push(err);
-    }
+    err && errors.push(err);
   };
 
   const subtotalsErrors = [];
