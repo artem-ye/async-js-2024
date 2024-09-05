@@ -112,7 +112,11 @@ export default [
       'no-whitespace-before-property': ['error'],
       'object-curly-spacing': ['error', 'always'],
       'operator-assignment': ['error', 'always'],
-      'operator-linebreak': ['error', 'before'],
+      'operator-linebreak': [
+        'error',
+        'after',
+        { overrides: { '?': 'before', ':': 'before' } },
+      ],
 
       'semi-spacing': [
         'error',
