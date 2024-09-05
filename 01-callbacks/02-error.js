@@ -16,8 +16,7 @@ const total = (items, callback) => {
   let result = 0;
   for (const { price } of items) {
     if (price < 0) {
-      const err = new Error(`Negative price detected ${price}`);
-      return void callback(err);
+      return void callback(new Error(`Negative price detected ${price}`));
     }
     result += price;
   }
