@@ -3,15 +3,6 @@
 // Task: return an error for items with negative price
 // Hint: use callback-last-error-first contract
 
-// eslint-disable-next-line no-unused-vars
-const totalOrig = (items, callback) => {
-  let result = 0;
-  for (const item of items) {
-    result += item.price;
-  }
-  callback(result);
-};
-
 const total = (items, callback) => {
   let result = 0;
   for (const { price } of items) {
