@@ -28,13 +28,14 @@ const total = (items, callback) => {
     };
 
     timer = setInterval(() => {
-      if (i > items.length - 1) return void done(null, result);
+      if (!(i < items.length)) return void done(null, result);
 
       console.log({ check: { item: items[i] } });
 
       const { price } = items[i++];
-      result += price;
-      price < 0 && done(new Error('Negative price is not allowed'));
+      price < 0
+        ? done(new Error('Negative price is not allowed'))
+        : (result += price);
     }, 1000);
   };
 

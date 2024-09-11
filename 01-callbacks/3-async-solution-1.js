@@ -32,8 +32,9 @@ const total = (items, callback) => {
         console.log({ check: { item: items[i] } });
 
         const { price } = items[i++];
-        result += price;
-        price < 0 && done(new Error('Negative price is not allowed'));
+        price < 0
+          ? done(new Error('Negative price is not allowed'))
+          : (result += price);
       } else {
         done(null, result);
       }
