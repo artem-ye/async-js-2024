@@ -3,10 +3,9 @@
 // Task: rewrite this synchronous code to asynchronous
 // using `setTimeout` from 'node:timers/promises'
 
-const sleep = (msec) => {
-  const end = new Date().getTime() + msec;
-  while (new Date().getTime() < end);
-};
+const { setTimeout } = require('node:timers/promises');
+
+const sleep = (msec) => setTimeout(msec);
 
 (async () => {
   console.log({ start: new Date().toISOString() });

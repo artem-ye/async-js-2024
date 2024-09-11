@@ -3,14 +3,12 @@
 // Task: rewrite function to return result into sync callback
 
 // Change signature to: (items, callback(result))
-
-const total = (items, cb) => {
-  try {
-    const res = items.reduce((acc, { price }) => price + acc, 0);
-    cb(null, res);
-  } catch (err) {
-    cb(err);
+const total = (items) => {
+  let result = 0;
+  for (const item of items) {
+    result += item.price;
   }
+  return result;
 };
 
 const electronics = [
@@ -20,7 +18,5 @@ const electronics = [
 ];
 
 // Use new signature total(electronics, (money) => ...)
-total(electronics, (err, res) => {
-  if (err) return void console.error(err);
-  console.log('Callback', { res });
-});
+const money = total(electronics);
+console.log({ money });

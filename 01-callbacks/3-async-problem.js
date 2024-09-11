@@ -16,8 +16,7 @@
 // { money: 1610 }
 // { money: 1610 }
 
-// eslint-disable-next-line no-unused-vars
-const totalOrig = (items, callback) => {
+const total = (items, callback) => {
   let result = 0;
   for (const item of items) {
     console.log({ check: { item } });
@@ -30,30 +29,10 @@ const totalOrig = (items, callback) => {
   callback(null, result);
 };
 
-const total = (items, callback) => {
-  const iterate = (i = 0, result = 0) => {
-    const timer = setInterval(() => {
-      console.log({ check: { item: items[i] } });
-      clearInterval(timer);
-      const { price = 0 } = items[i] || {};
-
-      if (price < 0)
-        return void callback(new Error('Negative price is not allowed'));
-
-      result += price;
-      if (++i < items.length) iterate(i, result);
-      // else callback(null, result); // or maybe like this?
-      else setTimeout(() => callback(null, result), 0);
-    }, 1000);
-  };
-
-  iterate();
-};
-
 const electronics = [
-  // { name: "Laptop", price: 1500 },
-  // { name: "Keyboard", price: 100 },
-  // { name: "HDMI cable", price: 10 },
+  { name: 'Laptop', price: 1500 },
+  { name: 'Keyboard', price: 100 },
+  { name: 'HDMI cable', price: 10 },
 ];
 
 total(electronics, (error, money) => {

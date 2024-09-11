@@ -16,45 +16,29 @@
 // { money: 1610 }
 // { money: 1610 }
 
-const totalOrig = (items, callback) => {
-  let result = 0;
-  for (const item of items) {
-    console.log({ check: { item } });
-    if (item.price < 0) {
-      callback(new Error('Negative price is not allowed'));
-      return;
-    }
-    result += item.price;
-  }
-  callback(null, result);
-};
-
 const total = (items, callback) => {
-  let error = null;
-  let result = 0;
-  const timers = new Set();
+  const iterate = () => {
+    let timer = null;
+    let result = 0;
+    let i = 0;
 
-  const asyncTotal = ({ price }) => {
-    const timer = setInterval(() => {
-      result += price;
+    const done = (err, res) => {
       clearInterval(timer);
-      timers.delete(timer);
-      console.log({ check: { price } });
+      callback(err, res);
+    };
 
-      if (error) return;
+    timer = setInterval(() => {
+      if (i > items.length - 1) return void done(null, result);
 
-      if (price < 0) {
-        error = new Error('Negative price is not allowed');
-        return void callback(error);
-      }
+      console.log({ check: { item: items[i] } });
 
-      timers.size === 0 && callback(null, result);
+      const { price } = items[i++];
+      result += price;
+      price < 0 && done(new Error('Negative price is not allowed'));
     }, 1000);
-
-    timers.add(timer);
   };
 
-  for (const item of items) asyncTotal(item);
+  iterate();
 };
 
 const electronics = [

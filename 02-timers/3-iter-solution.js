@@ -16,5 +16,6 @@ const electronics = [
   for await (const items of iter) {
     const item = items.shift();
     console.log({ item });
+    if (!items.length) break;
   }
 })();
