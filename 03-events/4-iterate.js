@@ -16,7 +16,12 @@ const electronics = [
 const iterator = on(purchase, 'add');
 console.log({ iterator });
 
+(async () => {
+  for await (const i of iterator) {
+    console.log('New item', i);
+  }
+})();
+
 for (const item of electronics) {
   purchase.emit('add', item);
 }
-

@@ -24,10 +24,8 @@ application.on('buy', (items) => {
 });
 
 (async () => {
-  const result = await once(application, 'purchase');
-  console.log(result);
+  const [err] = await once(application, 'error');
+  console.error(err);
 })();
 
-application
-  .once('error', console.error)
-  .emit('buy', electronics);
+application.once('purchase', console.log).emit('buy', electronics);
