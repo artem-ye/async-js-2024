@@ -26,7 +26,6 @@ const total = (items, callback) => {
       clearInterval(timer);
       timer = null;
       callback(err, res);
-      timer = null;
     };
 
     timer = setInterval(() => {
