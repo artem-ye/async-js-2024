@@ -7,6 +7,10 @@ const fs = require('node:fs');
 
 // Implementation
 
+// Right solution
+// const toBool = [() => true, () => false];
+// const fileExists = (name) => fs.promises.access(name).then(...toBool);
+
 const fileExists = (name) =>
   fs.promises.access(name).then(
     () => true,
